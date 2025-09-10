@@ -17,9 +17,9 @@ void ajouterUnJoueur() {
 
     equipe[n++] = j;  
 
-    printf("✅ Joueur %s %s ajouté avec ID = %d\n", j.nom, j.prenom, j.id);
+    printf("Joueur %s %s ajouté avec ID = %d\n", j.nom, j.prenom, j.id);
 }
-
+ 
 int j_max;
 struct joueur
 {
