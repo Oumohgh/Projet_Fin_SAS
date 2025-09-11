@@ -116,7 +116,7 @@ int main() {
                 // afficherAeroport(aeroportPrincipal);
                 break;
             case 0:
-                printf("Au revoir-Oughlane\n");
+                printf("Au revoir - Projet de Mohammed Oughlane\n");
                 break;
             default:
                 printf("Choix incorrect\n");
