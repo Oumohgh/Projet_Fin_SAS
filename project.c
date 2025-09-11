@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
 int idAeroport = 1;
 int idAvion = 1;
 int nbrAvion = 0;
@@ -34,7 +33,7 @@ void afficherAeroport(Aeroport a) {
     printf("------------- Flotte d'avions ---------------\n");
     for (int i = 0; i < nbrAvion; i++) {
         printf("Avion %d : ======================> \n", i+1);
-        printf("Id : %d | Modele : %s | Capacite : %d | Statut : %s | Date entree : %d/%d/%d \n",
+        printf("Id : %d - Modele : %s - Capacite : %d - Statut : %s - Date entree : %d/%d/%d \n",
                a.flotte[i].id, a.flotte[i].modele, a.flotte[i].capacite, a.flotte[i].statut,
                a.flotte[i].dateEntree.jour, a.flotte[i].dateEntree.mois, a.flotte[i].dateEntree.annee);
     }
@@ -82,7 +81,7 @@ Avion RechercheById(int id, Aeroport a) {
     }
 }
 
-// ------------------ SUPPRESSION ------------------
+
 Aeroport supprimerAvion(int id, Aeroport a) {
     int index = -1;
     for (int i = 0; i < nbrAvion; i++) {
@@ -99,14 +98,14 @@ Aeroport supprimerAvion(int id, Aeroport a) {
         Avion avVide;
         a.flotte[nbrAvion - 1] = avVide;
         nbrAvion--;
-        printf("Avion supprimé avec succès ✈️\n");
+        printf("Avion supprime avec succes\n");
     } else {
-        printf("Suppression impossible : avion introuvable ❌\n");
+        printf("Suppression impossible : avion introuvable \n");
     }
     return a;
 }
 
-// ------------------ MAIN ------------------
+
 int main() {
     int choix = 0;
     Aeroport aeroport;
@@ -118,7 +117,7 @@ int main() {
         printf("3 - Afficher Aeroport\n");
         printf("4 - Rechercher un Avion par ID\n");
         printf("5 - Supprimer un Avion\n");
-        printf("100 - Quitter\n");
+        printf("10 - Quitter\n");
         printf("Votre choix : ");
         scanf("%d", &choix);
 
@@ -137,4 +136,8 @@ int main() {
             case 4: 
                 afficherAeroport(aeroport);
                 break;
+                default:    
+                break;
+        }
+                return 0;
         }
