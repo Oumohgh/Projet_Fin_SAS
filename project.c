@@ -56,7 +56,14 @@ Aeroport ajouterAvionAeroport(Aeroport a) {
     }
     return a;
 }
+void Satistiques(Aeroport a){ /*afiche  Nombre total d’avions-Nombre d’avions par statut (“Disponible”, “En maintenance”, “En vol”).-Capacité totale de la flotte.=L'avion ayant la plus grande capacité et celui ayant la plus petite capacité*/
+    a.nbAvions++;
+    printf("%d",a.nbAvions); /*afiche  Nombre total d’avion*/
+    
 
+
+
+}
 // Afficher la liste des avions
 void afficherAeroport(Aeroport a) {
     printf("\n=== Aeroport : %s ===\n", a.nom);
@@ -67,7 +74,7 @@ void afficherAeroport(Aeroport a) {
 
     for (int i = 0; i < a.nbAvions; i++) {
         Avion av = a.flotte[i];
-        printf("ID: %d | Modele: %s | Capacite: %d | Statut: %s | Date: %02d/%02d/%04d\n",
+        printf("ID: %d | Modele: %s | Capacite: %d | Statut: %s | Date: %d/%d/%d\n",
                av.id, av.modele, av.capacite, av.statut,
                av.dateEntree.jour, av.dateEntree.mois, av.dateEntree.annee);
     }
@@ -157,6 +164,7 @@ int main() {
         printf("3. Modifier un avion\n");
         printf("4. Supprimer un avion\n");
         printf("5. Rechercher un avion\n");
+        printf("6. Trier les avions (par capacite)\n");
         printf("0. Quitter\n");
         printf("Votre choix : ");
         scanf("%d", &choix);
@@ -187,7 +195,14 @@ int main() {
                     printf("Avion trouve: %s\n", aeroport.flotte[idrech].modele);
                 else
                     printf("Avion introuvable\n");
+             
+                      break;
+            case 6:
+                triParCapacite(aeroport);
                 break;
+            case 7 :
+            printf("6. Statistiques");
+            
             case 0:
                 printf("Au revoir !\n");
                 break;
