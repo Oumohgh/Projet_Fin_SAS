@@ -2,14 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-int idAvion = 1;   // compteur global pour genere id avion
+int idAvion = 1;   
 
 typedef struct {
     int jour;
     int mois;
     int annee;
 } Date;
-
 typedef struct {
     int id;
     char modele[30];
@@ -145,7 +144,7 @@ void triParCapacite(Aeroport a) { // par bulles
                  a.flotte[j] = a.flotte[j+1]; 
                 a.flotte[j+1] = tmp;
             }
-    printf("Tri par capacite effectue (ordre croissant).\n");
+    printf(" croissant).\n");
     afficherAeroport(a);
 }
 
