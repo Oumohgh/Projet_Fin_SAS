@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<string.h>
 
-// Compteurs globaux pour générer des IDs uniques
 int idAvionGlobal = 1;
 int idAeroportGlobal = 1;
 
