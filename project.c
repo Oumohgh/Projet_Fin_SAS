@@ -25,9 +25,56 @@ typedef struct {
     Avion flotte[40];
 } Aeroport;
 
-void errMessage(char message[]) {
-    printf("%s", message);
-} 
+ Aeroport ajouterAvionAeroport(Aeroport a) {
+    afficherAeroport(a);
+    a.flotte[nbrAvion] = ajouterAvion(a);
+    nbrAvion++;
+    return a;
+}
+
+Avion modifyAvion (Avion x){ /*fonction pour modifier les elemetn d un avion avec le choix*/
+    Aeroport m;
+    Avion x;
+    
+    printf("Modifier \n");
+    int  i, choix;
+    for (i = 0; i < nbrAvion; i++) {
+            printf("1 : modifier le modele\n");
+            printf("2 : modifier le capacite\n");
+            printf("3 : modifier le statut\n");
+          
+            printf("Entrer votre choix de modification: ");
+            scanf("%d", &choix);
+
+            switch (choix) {
+                case 1:
+                    printf("entrer le nouveau modele : ");
+                    scanf(" %[^\n]", x.modele[i] );
+                     x.id = idAvion++;
+                    break;
+                case 2:
+                    printf("entrer le nouveau capacite : ");
+                    scanf(" %d", x.capacite );
+                    break;
+               
+                    
+                case 3:
+                printf("Statut (Disponible / En_vol / Maintenance) : ");
+                scanf("%s", x.statut);
+                default:
+                printf("choix de modification invalid");
+                break;
+            }
+            return;
+        }
+
+ 
+
+  
+}
+
+
+
 void afficherAeroport(Aeroport a) {
     printf("Id Aeroport : %d | Nom : %s \n", a.id, a.nom);
     printf("------------- Flotte d'avions ---------------\n");
@@ -40,29 +87,24 @@ void afficherAeroport(Aeroport a) {
 }
 
 Avion ajouterAvion(Aeroport a) {
-    Avion av;
-    av.id = idAvion++;
+    Avion avv;
+    avv.id = idAvion++;
     printf("Modele : ");
-    scanf("%s", av.modele);
+    scanf("%s", avv.modele);
     printf("Capacite : ");
-    scanf("%d", &av.capacite);
+    scanf("%d", &avv.capacite);
     printf("Statut (Disponible / En_vol / Maintenance) : ");
-    scanf("%s", av.statut);
+    scanf("%s", avv.statut);
     printf("Date entree (jour mois annee) : ");
-    scanf("%d %d %d", &av.dateEntree.jour, &av.dateEntree.mois, &av.dateEntree.annee);
+    scanf("%d %d %d", &avv.dateEntree.jour, &avv.dateEntree.mois, &avv.dateEntree.annee);
 
-    return av;
-}
-
-Aeroport ajouterAvionAeroport(Aeroport a) {
-    afficherAeroport(a);
-    a.flotte[nbrAvion] = ajouterAvion(a);
-    nbrAvion++;
-    return a;
+    return avv;
 }
 
 
-Avion RechercheById(int id, Aeroport a) {
+
+
+Avion RechercheId(int id, Aeroport a) {
     int index = -1;
     for (int i = 0; i < nbrAvion; i++) {
         if (a.flotte[i].id == id) {
@@ -71,7 +113,7 @@ Avion RechercheById(int id, Aeroport a) {
         }
     }
     if (index != -1) {
-        printf("Avion trouv \n");
+        printf("Avion trouv :\n");
         return a.flotte[index];
     } else {
         printf("Avion introuvable\n");
@@ -82,10 +124,10 @@ Avion RechercheById(int id, Aeroport a) {
 }
 
 
-Aeroport supprimerAvion(int id, Aeroport a) {
-    int index = -1;
+Aeroport supprimerAvion(int id, Aeroport s) {
+    int index = -1;             /*desa index l -1  bach */
     for (int i = 0; i < nbrAvion; i++) {
-        if (a.flotte[i].id == id) {
+        if (s.flotte[i].id == id) {
             index = i;
             break;
         }
@@ -93,19 +135,19 @@ Aeroport supprimerAvion(int id, Aeroport a) {
 
     if (index != -1) {
         for (int i = index; i < nbrAvion - 1; i++) {
-            a.flotte[i] = a.flotte[i + 1];
+            s.flotte[i] = s.flotte[i + 1];
         }
         Avion avVide;
-        a.flotte[nbrAvion - 1] = avVide;
+        s.flotte[nbrAvion - 1] = avVide;
         nbrAvion--;
         printf("Avion supprime avec succes\n");
     } else {
         printf("Suppression impossible : avion introuvable \n");
     }
-    return a;
+    return s;
 }
 
-
+/*testti */
 int main() {
     int choix = 0;
     Aeroport aeroport;
@@ -115,8 +157,9 @@ int main() {
         printf("1 - Ajouter Aeroport\n");
         printf("2 - Ajouter Avion\n");
         printf("3 - Afficher Aeroport\n");
-        printf("4 - Rechercher un Avion par ID\n");
-        printf("5 - Supprimer un Avion\n");
+        printf("4 - Modifier un avion (modele, capacite, statut).");
+        printf("5 - Rechercher un Avion par ID\n");
+        printf("6 - Supprimer un Avion\n");
         printf("10 - Quitter\n");
         printf("Votre choix : ");
         scanf("%d", &choix);
@@ -133,8 +176,31 @@ int main() {
             case 3:
                 afficherAeroport(aeroport);
                 break;
-            case 4: 
+                case 4: 
                 afficherAeroport(aeroport);
+                 Avion av;
+                av.id =-1;
+                printf("id : " ) ;
+                scanf("%d", &av.id);
+                av = RechercheId(av.id, aeroport);
+                if (av.id != -1) {
+                    av = modifyAvion(av);
+                } else {
+                    printf("Aucun avion trouve");
+                }
+                break;
+            case 5:
+                afficherAeroport(aeroport);
+                 Avion av;
+                av.id =-1;
+                printf("id : " ) ;
+                scanf("%d", &av.id);
+                av = RechercheId(av.id, aeroport);
+                if (av.id != -1) {
+                    aeroport = supprimerAvion(av.id, aeroport);
+                } else {
+                    printf("Aucun avion trouve");
+                }
                 break;
                 default:    
                 break;

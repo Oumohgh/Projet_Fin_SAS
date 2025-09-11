@@ -30,7 +30,7 @@ int main() {
 
             case 3:
                 if (aeroportInitialise) afficherAeroport(aeroport);
-                else printf("⚠️ Aucun aéroport créé.\n");
+                else printf("Aucun aéroport créé.\n");
                 break;
 
             case 4:
@@ -53,12 +53,12 @@ int main() {
                 
                 break;
 
-            case 100:
+            case 200:
                 printf("Fermeture du programme...\n");
                 break;
 
             default:
-                errMessage("Choix invalide ");
+                printf("Choix invalid");
         }
     } while (choix != 100);
 
