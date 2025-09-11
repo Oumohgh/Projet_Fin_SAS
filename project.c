@@ -62,7 +62,8 @@ void afficherAeroport(Aeroport a) {
     printf("\n=== Aeroport : %s ===\n", a.nom);
     if (a.nbAvions == 0) {
         printf("Aucun avion enregistre.\n");
-    }else{
+        return ;
+    }
 
     for (int i = 0; i < a.nbAvions; i++) {
         Avion av = a.flotte[i];
@@ -71,7 +72,7 @@ void afficherAeroport(Aeroport a) {
                av.dateEntree.jour, av.dateEntree.mois, av.dateEntree.annee);
     }
 }
-}
+
 
 int rechercherAvion(int id, Aeroport a) {
     for (int i = 0; i < a.nbAvions; i++) {
@@ -129,7 +130,17 @@ void supprimerAvion(Aeroport a, int id) {
     a.nbAvions--;
     printf("Avion supprime avec succes !\n");
 }
-
+void triParCapacite(Aeroport a) { // par bulles
+    for (int i = 0; i < a.nbAvions - 1; i++)
+        for (int j = 0; j < a.nbAvions - i - 1; j++)
+            if (a.flotte[j].capacite > a.flotte[j+1].capacite) {
+                Avion tmp = a.flotte[j];
+                 a.flotte[j] = a.flotte[j+1]; 
+                a.flotte[j+1] = tmp;
+            }
+    printf("Tri par capacite effectue (ordre croissant).\n");
+    afficherAeroport(a);
+}
 
 int main() {
     Aeroport aeroport;
@@ -153,7 +164,7 @@ int main() {
         switch (choix) {
             case 1:
                 ajouterAvionAeroport(aeroport);
-                
+                aeroport.nbAvions++;
                 break;
             case 2:
                 afficherAeroport(aeroport);
