@@ -57,10 +57,15 @@ Avion ajouterAvion(Aeroport aeroport){
         printf("Entrez le statut de l avion:\n1. Disponible\n2. En maintenance\n3. En vol\n");
         scanf("%d", &choix);
         switch(choix) {
-            case 1: strcpy(avion.statut, "Disponible"); break;
-            case 2: strcpy(avion.statut, "En maintenance"); break;
-            case 3: strcpy(avion.statut, "En vol"); break;
-            default: printf("Choix incorrect\n");
+            case 1: strcpy(avion.statut, "Disponible"); 
+            break;
+            case 2: strcpy(avion.statut, "En maintenance"); 
+            break;
+            case 3: strcpy(avion.statut, "En vol"); 
+            break;
+            default:
+             printf("Choix incorrect\n");
+             break;
         }
     } while(choix < 1 || choix > 3);
 
@@ -70,7 +75,6 @@ Avion ajouterAvion(Aeroport aeroport){
     } else {
         printf("Erreur : flotte pleine \n");
     }
-
     return avion;
 }
 
@@ -104,10 +108,13 @@ Avion menuAjouterAvion(Aeroport aeroport) {
         printf("Entrer le choix : ");
         scanf("%d", &choix);
         switch (choix) {
-            case 1: avion = ajouterAvion(aeroport); break;
-            case 2: avion = ajouterPlusieursAvions(aeroport); break;
+            case 1: avion = ajouterAvion(aeroport); 
+            break;
+            case 2: avion = ajouterPlusieursAvions(aeroport); 
+            break;
             case 3: break;
             default: printf("Choix incorrect\n");
+            break;
         }
     } while (choix != 3);
     return avion;
@@ -432,17 +439,17 @@ int main() {
 
         switch(choix){
             case 1: 
-            
             aeroportPrincipal = ajouterAeroport();
-             break;
+            break;
             case 2: 
-            aeroportPrincipal = ajouterAvionAeroport(aeroportPrincipal); break;
+            aeroportPrincipal = ajouterAvionAeroport(aeroportPrincipal); 
+            break;
             case 3: 
             afficherAeroport(aeroportPrincipal);
              break;
             case 4: 
-            
-            rechercherAvion(aeroportPrincipal); break;
+             rechercherAvion(aeroportPrincipal); 
+             break;
             case 5: 
             aeroportPrincipal = modifierAvion(aeroportPrincipal);
              break;
@@ -453,9 +460,12 @@ int main() {
             case 7:
              afficherTrie(aeroportPrincipal); 
             break;
-            case 8: resultat = calculCoefficientParc(aeroportPrincipal); printf("Coefficient parc: %d%%\n", resultat); 
+            case 8: 
+            resultat = calculCoefficientParc(aeroportPrincipal); 
+            printf("Coefficient parc: %d%%\n", resultat); 
             break;
-            case 9: afficherStatistiques(aeroportPrincipal); 
+            case 9: 
+            afficherStatistiques(aeroportPrincipal); 
             break;
             case 10:
             aeroportPrincipal = creerAeroportManuel();
@@ -464,7 +474,9 @@ int main() {
 
             case 0: printf("Au revoir -Oughlane\n");
              break;
-            default: printf("Choix incorrect\n");
+            default: 
+            printf("Choix incorrect\n");
+            break;
         }
     } while(choix != 0);
 
