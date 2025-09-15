@@ -34,6 +34,31 @@ Aeroport ajouterAeroport() {
     aeroport.nbAvions = 0;
     return aeroport;
 }
+int validerDate(Date date) {
+    if (date.annee < 1900 || date.annee > 2100) return 0;
+    if (date.mois < 1 || date.mois > 12) return 0;
+    if (date.jour < 1 || date.jour > 31) return 0;
+    int joursParMois[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if ((date.annee % 4 == 0 && date.annee % 100 != 0) || (date.annee % 400 == 0)) {
+        joursParMois[1] = 29;
+    }
+    if (date.jour > joursParMois[date.mois - 1]) return 0;
+    
+    return 1; 
+}
+
+int comparerDates(Date date1, Date date2) {
+    if (date1.annee > date2.annee) return 1;
+    if (date1.annee < date2.annee) return -1;
+    
+    if (date1.mois > date2.mois) return 1;
+    if (date1.mois < date2.mois) return -1;
+    
+    if (date1.jour > date2.jour) return 1;
+    if (date1.jour < date2.jour) return -1;
+    
+    return 0;
+}
 
 
 Avion ajouterAvion(Aeroport aeroport){
@@ -46,12 +71,18 @@ Avion ajouterAvion(Aeroport aeroport){
     scanf(" %[^\n]", avion.modele);
     printf("Entrez le nombre de passagers maximum :\n");
     scanf("%d", &avion.capacite);
-    printf("Entrez la date d'entree par jour:\n");
-    scanf("%d", &avion.dateEntree.jour);
-    printf("Entrez la date d'entree par mois:\n");
-    scanf("%d", &avion.dateEntree.mois);
-    printf("Entrez la date d'entree par annee:\n");
-    scanf("%d", &avion.dateEntree.annee);
+    do {
+        printf("Entrez la date d'entree par jour:\n");
+        scanf("%d", avion.dateEntree.jour);
+        printf("Entrez la date d'entree par mois:\n");
+        scanf("%d", avion.dateEntree.mois);
+        printf("Entrez la date d'entree par annee:\n");
+        scanf("%d", avion.dateEntree.annee);
+        
+        if (!validerDate(avion.dateEntree)) {
+            printf("Date invalide! Veuillez entrer une date valide.\n");
+        }
+    } while (!validerDate(avion.dateEntree));
 
     do { 
         printf("Entrez le statut de l avion:\n1. Disponible\n2. En maintenance\n3. En vol\n");
@@ -152,7 +183,7 @@ void rechercherAvion(Aeroport aeroport) {
     int choix, id, trouve = 0;
     char modele[30];
 
-    printf("1 : Recherche par ID\n2 : Recherche par modele\nEntrer le choix : ");
+    printf("1 : Recherche par ID\n2 : Recherche par modele\n3 : Recherche par date d'entree\nEntrer le choix : ");
     scanf("%d", &choix);
 
     if (choix == 1) {
@@ -186,6 +217,34 @@ void rechercherAvion(Aeroport aeroport) {
             }
         }
         if (!trouve) printf("Aucun avion trouv avec le modele '%s'.\n", modele);
+    } else if (choix == 3) {
+        Date dateRecherche;
+        printf("Recherche par date d'entree:\n");
+        printf("Entrer jour : ");
+        scanf("%d", &dateRecherche.jour);
+        printf("Entrer mois : ");
+        scanf("%d", &dateRecherche.mois);
+        printf("Entrer annee : ");
+        scanf("%d", &dateRecherche.annee);
+        
+        if (!validerDate(dateRecherche)) {
+            printf("Date invalide!\n");
+            return;
+        }
+        
+        for (int i = 0; i < aeroport.nbAvions; i++) {
+            if (comparerDates(aeroport.flotte[i].dateEntree, dateRecherche) == 0) {
+                Avion avion = aeroport.flotte[i];
+                printf("-------------------------------------\n");
+                printf("ID : %d\nModele : %s\nCapacite: %d\nDate dEntree : %d/%d/%d\nStatut: %s\n",
+                    avion.idAvion, avion.modele, avion.capacite,
+                    avion.dateEntree.jour, avion.dateEntree.mois, avion.dateEntree.annee,
+                    avion.statut);
+                trouve = 1;
+            }
+        }
+        if (!trouve) printf("Aucun avion trouv avec la date '%d/%d/%d'.\n", 
+                           dateRecherche.jour, dateRecherche.mois, dateRecherche.annee);
     } else {
         printf("Choix incorrect\n");
     }
@@ -201,7 +260,7 @@ Aeroport modifierAvion(Aeroport aeroport) {
     scanf("%d", &id);
     for (int i = 0; i < aeroport.nbAvions; i++) {
         if (aeroport.flotte[i].idAvion == id) {
-            printf("1 : Modifier modele\n2 : Modifier capacite\n3 : Modifier statut\n4 : Quitter\nEntrer le choix : ");
+            printf("1 : Modifier modele\n2 : Modifier capacite\n3 : Modifier statut\n4 : Modifier date d'entree\n5 : Quitter\nEntrer le choix : ");
             scanf("%d", &choix);
             switch (choix) {
                 case 1: printf("Entrer nouveau modele : "); scanf(" %[^\n]", aeroport.flotte[i].modele); break;
@@ -218,7 +277,22 @@ Aeroport modifierAvion(Aeroport aeroport) {
                         }
                     } while (choix < 1 || choix > 3);
                     break;
-                case 4: break;
+                case 4: 
+                    do {
+                        printf("Entrer nouveau jour : ");
+                        scanf("%d", &aeroport.flotte[i].dateEntree.jour);
+                        printf("Entrer nouveau mois : ");
+                        scanf("%d", &aeroport.flotte[i].dateEntree.mois);
+                        printf("Entrer nouvelle annee : ");
+                        scanf("%d", &aeroport.flotte[i].dateEntree.annee);
+                        
+                        if (!validerDate(aeroport.flotte[i].dateEntree)) {
+                            printf("Date invalide! Veuillez entrer une date valide.\n");
+                        }
+                    } while (!validerDate(aeroport.flotte[i].dateEntree));
+                    printf("Date d'entree modifiee avec succes!\n");
+                    break;
+                case 5: break;
                 default: printf("Choix incorrect\n");
             }
             return aeroport;
@@ -227,7 +301,6 @@ Aeroport modifierAvion(Aeroport aeroport) {
     printf("ID non trouv\n");
     return aeroport;
 }
-
 
 Aeroport supprimerAvion(Aeroport aeroport) {
     printf("========================================\n");
@@ -260,7 +333,7 @@ Aeroport supprimerAvion(Aeroport aeroport) {
 void afficherTrie(Aeroport aeroport) {
     int choix;
     Avion temp;
-    printf("1 : Trier par ordre alphabetique (modele)\n2 : Trier par capacite\nEntrer le choix : ");
+    printf("1 : Trier par ordre alphabetique (modele)\n2 : Trier par capacite\n3 : Trier par date d'entree\nEntrer le choix : ");
     scanf("%d", &choix);
     if (choix == 1) {
         for (int i = 0; i < aeroport.nbAvions - 1; i++) {
@@ -282,6 +355,39 @@ void afficherTrie(Aeroport aeroport) {
                     aeroport.flotte[j] = temp;
                 }
             }
+        }
+        afficherAeroport(aeroport);
+    } else if (choix == 3) {
+        printf("Trier par date d'entree:\n");
+        printf("1 : Plus ancienne d'abord\n2 : Plus recente d'abord\nEntrer le choix : ");
+        int choixDate;
+        scanf("%d", &choixDate);
+        
+        if (choixDate == 1) {
+            // Tri par date croissante (plus ancienne d'abord)
+            for (int i = 0; i < aeroport.nbAvions - 1; i++) {
+                for (int j = i+1; j < aeroport.nbAvions; j++) {
+                    if (comparerDates(aeroport.flotte[i].dateEntree, aeroport.flotte[j].dateEntree) > 0) {
+                        temp = aeroport.flotte[i];
+                        aeroport.flotte[i] = aeroport.flotte[j];
+                        aeroport.flotte[j] = temp;
+                    }
+                }
+            }
+        } else if (choixDate == 2) {
+            // Tri par date décroissante (plus récente d'abord)
+            for (int i = 0; i < aeroport.nbAvions - 1; i++) {
+                for (int j = i+1; j < aeroport.nbAvions; j++) {
+                    if (comparerDates(aeroport.flotte[i].dateEntree, aeroport.flotte[j].dateEntree) < 0) {
+                        temp = aeroport.flotte[i];
+                        aeroport.flotte[i] = aeroport.flotte[j];
+                        aeroport.flotte[j] = temp;
+                    }
+                }
+            }
+        } else {
+            printf("Choix incorrect\n");
+            return;
         }
         afficherAeroport(aeroport);
     } else {
