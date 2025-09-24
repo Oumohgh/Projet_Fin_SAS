@@ -1,106 +1,127 @@
-Projet : Gestion d’un Parc d’Avions dans un Aéroport
+✈️ Airport Fleet Management in C
+📌 Project Overview
 
-Introduction :
-Créez une application console qui permet de gérer un aéroport fictif et son parc d’avions.
+This project is a console-based C application designed to manage an airport and its fleet of airplanes.
+It allows users to perform essential operations such as adding, modifying, deleting, and displaying airplanes, managing airport details, searching, sorting, and calculating statistics such as fleet occupation rate.
 
-L’application doit offrir la possibilité d’ajouter, modifier, supprimer et afficher les avions du parc, gérer les informations de l’aéroport, effectuer des recherches et appliquer des tris, tout en intégrant une fonction bonus de calcul d’un coefficient d’occupation du parc.
+The project has been developed as part of a learning exercise to strengthen programming skills in C language, focusing on data structures, algorithms, and problem-solving.
 
-Contexte du projet :
-L’application doit avoir un menu qui vous permet de :
+🎯 Features
+✈️ Airplane Management
 
-1. Gestion des avions
-Chaque avion est défini par une structure contenant :
+Add one or multiple airplanes.
 
-idAvion (int, unique, généré automatiquement)
+Modify airplane details (model, capacity, status).
 
-modele (string, ex : Boeing 737, Airbus A320)
+Delete airplanes.
 
-capacite (int, nombre de passagers maximum)
+Display the complete fleet.
 
-statut (string : “Disponible”, “En maintenance”, “En vol”)
+Search airplanes (by ID or model).
 
-dateEntree (structure Date : jour, mois, année)
+Sort airplanes (by capacity, alphabetical model, or entry date).
 
-Fonctionnalités :
+🏢 Airport Management
 
-Ajouter un avion (ou plusieurs).
+Initialize an airport with its name.
 
-Modifier un avion (modele, capacité, statut).
+Display airport information and fleet statistics.
 
-Supprimer un avion.
+📅 Date Management (Bonus)
 
-Afficher la liste des avions.
+Associate an entry date with each airplane.
 
-Rechercher un avion (par id ou par modèle).
+Sort airplanes by date of entry.
 
-Trier les avions (par capacité, par modèle alphabétique,).
+📊 Statistics
 
-2. Gestion de l’aéroport
-Chaque aéroport est défini par une structure contenant :
+Total number of airplanes.
 
-nom (string, ex : Casablanca Mohammed V)
+Number of airplanes per status: Available, In Maintenance, In Flight.
 
-flotte (tableau d’avions)
+Total passenger capacity of the fleet.
 
-nbAvions (int, nombre total d’avions enregistrés dans l’aéroport)
+Airplane with the largest and smallest capacity.
 
-idAvion (liste des 
+📈 Fleet Occupation Coefficient
 
-Fonctionnalités :
+The application calculates:
 
-Initialiser un aéroport avec son nom.
-
-Afficher les informations de l’aéroport et de sa flotte.
+Coefficient = (Available airplanes / Total airplanes) × 100
 
 
-3. Gestion des dates (Bonus)
-Chaque date est définie par une structure contenant :
+This indicates the availability rate of the fleet.
 
-jour (int)
+🛠️ Technical Requirements
 
-mois (int)
+Language: C
 
-annee (int)
+Data Structures:
 
-Fonctionnalités :
+Structures for Airplane, Airport, Date.
 
-Associer une date d’entrée à chaque avion.
+Arrays (static or dynamic) for storing collections.
 
-Permettre un tri par date d’entrée dans le parc.
+Algorithms:
 
-Trier les avions par date d'entrée.
+Sequential search.
 
-4. Fonction - Calcul du coefficient d’occupation du parc
-Le coefficient d’occupation du parc est calculé ainsi :
+Sorting (Selection Sort, Bubble Sort, etc.).
 
-Coeff Occupation = (Nombre d’avions disponibles / Nombre total d’avions) × 100
+User Interface: Console menu (user always returns to the main menu after each operation).
 
-Fonctionnalités :
+📂 Project Structure
+📦 Airport-Fleet-Management
+ ┣ 📜 main.c          # Entry point of the program
+ ┣ 📜 airport.h       # Header files (structs and function prototypes)
+ ┣ 📜 airport.c       # Implementation of airport-related functions
+ ┣ 📜 airplane.c      # Implementation of airplane-related functions
+ ┣ 📜 date.c          # Implementation of date-related functions
+ ┣ 📜 utils.c         # Helper functions (search, sorting, etc.)
+ ┗ 📜 README.md       # Project documentation
 
-Calculer le pourcentage d’avions disponibles dans l’aéroport.
+🚀 How to Run
 
-Afficher ce coefficient sous forme numérique.
+Clone the repository:
 
-5. Statistiques
-Nombre total d’avions dans le parc.
+Navigate to the project folder:
 
-Nombre d’avions par statut (“Disponible”, “En maintenance”, “En vol”).
-
-Capacité totale de la flotte.
-
-L'avion ayant la plus grande capacité et celui ayant la plus petite capacité.
-
-Contraintes pédagogiques :
-Les étudiants doivent utiliser :
-
-des structures pour représenter les entités (Avion, Airport, Date).
-
-des tableaux (statiques ou dynamiques simples) pour stocker les collections.
-
-Après chaque opération, l’utilisateur retourne au menu principal.
-
-Implémenter des algorithmes de recherche et de tri adaptés (recherche séquentielle, tri par sélection, tri à bulles, etc.).
+cd Airport-Fleet-Management
 
 
-N.B : L’utilisateur doit retourner au menu principal après chaque opération.
+Compile the program:
 
+gcc main.c airport.c airplane.c date.c utils.c -o airport_app
+
+
+Run the application:
+
+./airport_app
+
+🎓 Learning Objectives
+
+This project helps to practice:
+
+Structs in C.
+
+Array management (static and dynamic).
+
+Algorithmic problem-solving (search & sorting).
+
+Menu-driven console applications.
+
+Project organization (multiple files, modular design).
+
+📌 Future Improvements
+
+Add file persistence (save/load data).
+
+Add advanced sorting algorithms (QuickSort, MergeSort).
+
+Support for multiple airports.
+
+Add graphical interface (using C graphics library or GUI frameworks).
+
+🤝 Contributing
+
+Contributions are welcome! Please feel free to fork this repository, submit issues, or create pull requests.
